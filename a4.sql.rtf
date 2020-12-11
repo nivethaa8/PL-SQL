@@ -1,0 +1,279 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2512
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 #query for table creation\
+\
+CREATE TABLE investor_table(  \
+    i_id NUMBER(3) NOT NULL,  \
+    first_name VARCHAR2(50) NOT NULL,  \
+    last_name VARCHAR2(50) NOT NULL,  \
+    email VARCHAR2(50) NOT NULL,  \
+    contact_number NUMBER(10) NOT NULL,  \
+    city  VARCHAR2(20) NOT NULL,\
+    PRIMARY KEY(i_id)  \
+);\
+/\
+CREATE TABLE projects_table (  \
+    pro_id NUMBER(3) NOT NULL,  \
+    pro_name VARCHAR2(50) NOT NULL,  \
+    category VARCHAR2(50) NOT NULL,  \
+    total_investment NUMBER(15,2) NOT NULL,  \
+    PRIMARY KEY(pro_id)  \
+);\
+/\
+CREATE TABLE status_table (  \
+    s_id NUMBER(3) NOT NULL,  \
+    status_table VARCHAR2(50) NOT NULL,  \
+    PRIMARY KEY(s_id)  \
+);\
+/\
+CREATE TABLE sub_project_table (  \
+    sp_id NUMBER(3) NOT NULL,  \
+    sub_project VARCHAR2(200) NOT NULL,  \
+    pro_id number(3) NOT NULL,\
+    i_id number(3) NOT NULL,\
+    PRIMARY KEY(sp_id)  \
+);\
+/\
+CREATE TABLE payment_table (  \
+    pay_id NUMBER(3) NOT NULL,   \
+    sp_id NUMBER(3) NOT NULL,  \
+    amount NUMBER(7,2) NOT NULL,  \
+    payment_mode VARCHAR2(10) NOT NULL,   \
+    s_id NUMBER(3) NOT NULL,\
+    PRIMARY KEY(pay_id)  \
+);\
+/  \
+\
+--query for creating sequences\
+\
+CREATE SEQUENCE investor_table_seq  \
+  MINVALUE 1  \
+  MAXVALUE 100000  \
+  START WITH 1  \
+  INCREMENT BY 1  \
+  CACHE 20;\
+/\
+CREATE SEQUENCE status_table_seq  \
+  MINVALUE 1  \
+  MAXVALUE 100000  \
+  START WITH 1  \
+  INCREMENT BY 1  \
+  CACHE 20;\
+/\
+CREATE SEQUENCE payment_table_seq \
+  MINVALUE 1 \
+  MAXVALUE 100000 \
+  START WITH 1 \
+  INCREMENT BY 1 \
+  CACHE 20;\
+/\
+CREATE SEQUENCE sub_project_table_seq  \
+  MINVALUE 1  \
+  MAXVALUE 100000  \
+  START WITH 1  \
+  INCREMENT BY 1  \
+  CACHE 20;\
+/\
+CREATE SEQUENCE project_seq  \
+  MINVALUE 101  \
+  MAXVALUE 100000  \
+  START WITH 101  \
+  INCREMENT BY 1  \
+  CACHE 20;\
+/\
+\
+\
+--query for inserting data into tables\
+\
+--investor_table table\
+INSERT INTO investor_table VALUES(investor_table_seq.NEXTVAL,'john','doe','johndoe@domain.com',0123456789,'new jesrsy');\
+/ \
+INSERT INTO investor_table VALUES(investor_table_seq.NEXTVAL,'mike','tyson','miketyson@domain.com',0123456889,'new york');\
+/ \
+INSERT INTO investor_table VALUES(investor_table_seq.NEXTVAL,'shane','watson','shanewatson@domain.com',2234526889,'nevada');\
+/ \
+INSERT INTO investor_table VALUES(investor_table_seq.NEXTVAL,'jonny','bairstow','johnnybairstow@domain.com',2204445688,'menhattan');\
+/ \
+INSERT INTO investor_table VALUES(investor_table_seq.NEXTVAL,'mark','watson','markwatson@domain.com',8866335788,'toronto');\
+/ \
+INSERT INTO investor_table VALUES(investor_table_seq.NEXTVAL,'james','pattinson','jamespattinson@domain.com',8866415788,'sydney');\
+/ \
+INSERT INTO investor_table VALUES(investor_table_seq.NEXTVAL,'ross','taylor','rosstaylor@domain.com',8866415128,'christchurch');\
+/ \
+INSERT INTO investor_table VALUES(investor_table_seq.NEXTVAL,'kane','williamson','kanewilliamson@domain.com',8885415128,'auckland');\
+/ \
+INSERT INTO investor_table VALUES(investor_table_seq.NEXTVAL,'dale','styne','dalestyne@domain.com',8845415128,'cape town');\
+/ \
+INSERT INTO investor_table VALUES(investor_table_seq.NEXTVAL,'brett','lee','brettlee@domain.com',8841215128,'malbourn');\
+/ \
+\
+\
+--project table\
+INSERT INTO projects_table VALUES(project_seq.NEXTVAL,'education for all','education',0);\
+/\
+INSERT INTO projects_table VALUES(project_seq.NEXTVAL,'water is life','environment',0);\
+/\
+INSERT INTO projects_table VALUES(project_seq.NEXTVAL,'save the tree,save the plant','environment',0);\
+/\
+INSERT INTO projects_table VALUES(project_seq.NEXTVAL,'cancer awareness','health',0);\
+/\
+INSERT INTO projects_table VALUES(project_seq.NEXTVAL,'COVID19','health',0);\
+/\
+\
+\
+--status_table table\
+INSERT INTO status_table VALUES (status_table_seq.NEXTVAL,'pending');\
+/\
+INSERT INTO status_table VALUES (status_table_seq.NEXTVAL,'received');\
+/\
+INSERT INTO status_table VALUES (status_table_seq.NEXTVAL,'processing');\
+/\
+INSERT INTO status_table VALUES (status_table_seq.NEXTVAL,'rejected');\
+/\
+INSERT INTO status_table VALUES (status_table_seq.NEXTVAL,'successfull');\
+/\
+\
+\
+--sub_project_table table\
+INSERT INTO sub_project_table VALUES(sub_project_table_seq.NEXTVAL,'will plant 100 trees',103,2);\
+/\
+INSERT INTO sub_project_table VALUES(sub_project_table_seq.NEXTVAL,'awarness program',104,6);\
+/\
+INSERT INTO sub_project_table VALUES(sub_project_table_seq.NEXTVAL,'to feed poor people',105,3);\
+/\
+INSERT INTO sub_project_table VALUES(sub_project_table_seq.NEXTVAL,'will provide education to 10 children',101,9);\
+/  \
+INSERT INTO sub_project_table VALUES(sub_project_table_seq.NEXTVAL,'will provide clean water to villages',102,8);\
+/\
+\
+--this trigger will fire when user inserts record in payment table and it will update the total donation in the project table for that particular project\
+\
+CREATE OR REPLACE TRIGGER update_donation_amount          \
+AFTER INSERT ON payment_table           \
+FOR EACH ROW           \
+WHEN (NEW.amount > 0)           \
+DECLARE       \
+    project_id number;  \
+    previous_total number;       \
+    new_donation number;         \
+BEGIN  \
+   SELECT pro_id INTO project_id FROM sub_project_table WHERE sp_id=:NEW.sp_id;  \
+   SELECT total_investment INTO previous_total FROM projects_table WHERE pro_id=project_id;          \
+   new_donation := previous_total + :NEW.amount;      \
+   UPDATE projects_table SET total_investment = new_donation WHERE pro_id=project_id;      \
+   dbms_output.put_line('total donation updated');   \
+   dbms_output.put_line('Updated total donation ' || new_donation );   \
+END;   \
+/\
+\
+--payment table\
+INSERT INTO payment_table VALUES(payment_table_seq.NEXTVAL,3,5000,'cash',2);\
+/\
+INSERT INTO payment_table VALUES(payment_table_seq.NEXTVAL,2,10000,'cheque',1);\
+/\
+INSERT INTO payment_table VALUES(payment_table_seq.NEXTVAL,4,20000,'UPI',4);\
+/\
+INSERT INTO payment_table VALUES(payment_table_seq.NEXTVAL,1,50000,'cheque',1);\
+/\
+INSERT INTO payment_table VALUES(payment_table_seq.NEXTVAL,5,25000,'cash',2);\
+/\
+INSERT INTO payment_table VALUES(payment_table_seq.NEXTVAL,2,5000,'cash',3);\
+/\
+\
+\
+--function to find total number of donors\
+CREATE OR REPLACE FUNCTION totalDonors   \
+RETURN number IS   \
+   total number(2) := 0;   \
+BEGIN   \
+   SELECT count(*) into total   \
+   FROM investor_table;\
+      \
+   RETURN total;   \
+END;  \
+/\
+\
+DECLARE  \
+   c number(2);      \
+BEGIN  \
+   c := totalDonors();  \
+   dbms_output.put_line('Total no. of Donors: ' || c);  \
+END; \
+/\
+\
+--query for creating index\
+CREATE INDEX investor_first_name_idx2 ON investor_table (i_id,first_name, last_name);\
+/\
+\
+--triggers\
+--this trigger will fire when user deletes record in investor_table table and it will delete all the records of that user from the payment table\
+\
+CREATE OR REPLACE TRIGGER delete_donor_records  \
+BEFORE DELETE ON investor_table\
+ \
+FOR EACH ROW   \
+WHEN (OLD.i_id > 0)   \
+DECLARE \
+    sub_project_id number;  \
+    countNo number; \
+BEGIN\
+   SELECT sp_id INTO (sub_project_id) FROM sub_project_table WHERE i_id=:OLD.i_id;   \
+   DELETE FROM payment_table WHERE sp_id=sub_project_id;  \
+   dbms_output.put_line('DELETED DATA SUCCESSFULLY FROM payment_table TABLE'); \
+END;   \
+/\
+\
+\
+--this trigger will fire when user inserts record in payment table and it will update the total donation in the project table for that particular project\
+\
+CREATE OR REPLACE TRIGGER update_donation_amount          \
+AFTER INSERT ON payment_table           \
+FOR EACH ROW           \
+WHEN (NEW.amount > 0)           \
+DECLARE       \
+    project_id number;  \
+    previous_total number;       \
+    new_donation number;         \
+BEGIN  \
+   SELECT pro_id INTO project_id FROM sub_project_table WHERE sp_id=:NEW.sp_id;  \
+   SELECT total_investment INTO previous_total FROM projects_table WHERE pro_id=project_id;          \
+   new_donation := previous_total + :NEW.amount;      \
+   UPDATE projects_table SET total_investment = new_donation WHERE pro_id=project_id;      \
+   dbms_output.put_line('total donation updated');   \
+   dbms_output.put_line('Updated total donation ' || new_donation );   \
+END;   \
+/\
+\
+--procedure for viewing grand total of donation\
+\
+CREATE OR REPLACE PROCEDURE view_total_investment(grand_total OUT number)\
+IS\
+BEGIN\
+ SELECT SUM(total_investment) INTO grand_total FROM projects_table;\
+END view_total_investment;\
+/\
+\
+CREATE OR REPLACE PROCEDURE total_payments(total OUT number)\
+IS\
+BEGIN\
+ SELECT COUNT(*) INTO total FROM payment_table;\
+END total_payments; \
+/\
+\
+--script to run procedure and trigger\
+DECLARE \
+ grand_total NUMBER;\
+ payments number;\
+BEGIN\
+ --query to perform trigger\
+ DELETE FROM investor_table WHERE i_id=2;\
+ total_payments(payments);\
+ view_total_investment(grand_total);\
+ DBMS_OUTPUT.PUT_LINE('TOTAL investment:: ' || grand_total);\
+ DBMS_OUTPUT.PUT_LINE('TOTAL number of payments:: ' || payments);\
+END;}
